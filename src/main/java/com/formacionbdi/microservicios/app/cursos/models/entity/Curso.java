@@ -1,6 +1,7 @@
 package com.formacionbdi.microservicios.app.cursos.models.entity;
 
 import com.formacionbdi.microservicios.commons.alumnos.models.entity.Alumno;
+import com.formacionbdi.microservicios.commons.examenes.models.entity.Examen;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class Curso {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Alumno> alumnos;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Examen> examenes;
+
     @PrePersist
     public void prePersist() {
         this.createAt = new Date();
@@ -30,6 +34,7 @@ public class Curso {
 
     public Curso() {
         this.alumnos = new ArrayList<>();
+        this.examenes = new ArrayList<>();
     }
 
     public Long getId() {
@@ -70,5 +75,21 @@ public class Curso {
 
     public void removeAlumno(Alumno alumno) {
         this.alumnos.remove(alumno);
+    }
+
+    public List<Examen> getExamenes() {
+        return examenes;
+    }
+
+    public void setExamenes(List<Examen> examenes) {
+        this.examenes = examenes;
+    }
+
+    public void addExamen(Examen examen) {
+        this.examenes.add(examen);
+    }
+
+    public void removeExamen(Examen examen) {
+        this.examenes.remove(examen);
     }
 }
